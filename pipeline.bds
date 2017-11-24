@@ -9,7 +9,7 @@ cmd += " -a " + reference_annotations;
 cmd += " -f gene ";
 cmd += " -w 150 ";
 cmd += " -o " + gene_sequences;
-stage(cmd);
+stage("ann&refseq2geneseqs",cmd);
 
 #map miRNA sequences into genes sequences
 
