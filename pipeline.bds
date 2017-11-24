@@ -1,0 +1,20 @@
+#required inputs
+string reference_sequences = "";
+string reference_annotations = "";
+
+#extract genes sequences from reference and annotations +- 100
+
+#map miRNA sequences into genes sequences
+
+#validate miRNA secondary structure
+
+#extract valid miRNA sequences
+
+#cleavage of targets
+
+#helper functions
+void stage(string name, string cmd) {
+  print "Stage: " + name + "\n";
+  print "Command: " + cmd + "\n";
+  sys $cmd;
+}
