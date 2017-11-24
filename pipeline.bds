@@ -2,7 +2,7 @@
 string reference_sequences = "data/Triticum_aestivum.TGACv1.dna.toplevel.fa";
 string reference_annotations = "data/Triticum_aestivum.TGACv1.37.gff3";
 string gene_sequences = "output/genes_sequences.fasta"
-
+string cmd = "";
 #extract genes sequences from reference and annotations +- 100
 cmd = "python scripts/ann2fasta -s " + reference_sequences;
 cmd += " -a " + reference_annotations;
