@@ -4,11 +4,12 @@ string reference_annotations = "data/Triticum_aestivum.TGACv1.37.gff3";
 string gene_sequences = "output/genes_sequences.fasta"
 
 #extract genes sequences from reference and annotations +- 100
-    cmd = "python scripts/ann2fasta -s " + reference_sequences;
-    cmd += " -a " + reference_annotations;
-    cmd += " -f gene ";
-    cmd += " -o " + gene_sequences;
-    stage(cmd);
+cmd = "python scripts/ann2fasta -s " + reference_sequences;
+cmd += " -a " + reference_annotations;
+cmd += " -f gene ";
+cmd += " -w 150 ";
+cmd += " -o " + gene_sequences;
+stage(cmd);
 
 #map miRNA sequences into genes sequences
 
