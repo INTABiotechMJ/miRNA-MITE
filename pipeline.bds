@@ -2,7 +2,7 @@
 string reference_sequences = "data/Triticum_aestivum.TGACv1.dna.toplevel.fa";
 string reference_annotations = "data/Triticum_aestivum.TGACv1.37.gff3";
 string reference_annotations_clean = "data/Triticum_aestivum.TGACv1.37.clean.gff3";
-reference_annotations_clean = "data/test.10000.gff3";
+reference_annotations_clean = "data/test.300.gff3";
 string gene_sequences = "output/genes_sequences.fasta"
 string cmd = "";
 
