@@ -8,7 +8,7 @@ string cmd = "";
 
 #clean gff3 file for pandas
 cmd = "cat " + reference_annotations + " |  sed '/^#/ d' > " + reference_annotations_clean
-stage("clean reference annotations ",cmd);
+#stage("clean reference annotations ",cmd);
 
 #extract genes sequences from reference and annotations +- 100
 cmd = "python scripts/ann2fasta.py -s " + reference_sequences;
