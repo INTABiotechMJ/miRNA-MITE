@@ -20,7 +20,7 @@ cmd += " |  sed '/^#/ d' > " + reference_annotations_clean
 #only genes in gff
 cmd =  "awk -F '\t' '{ if($3==\"gene\") print}' ";
 cmd += " " + reference_annotations_clean  + " > " + ann_genes
-#stage("filter gff to only genes ",cmd);
+stage("filter gff to only genes ",cmd);
 
 #remove some ids from reference sequence
 cmd = "python scripts/FAexclude.py -s " + reference_sequences;
