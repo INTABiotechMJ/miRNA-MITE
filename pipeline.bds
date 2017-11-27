@@ -5,11 +5,14 @@ string reference_annotations = "files/data/Triticum_aestivum.TGACv1.37.gff3";
 string reference_annotations_clean = "files/data/Triticum_aestivum.TGACv1.37.clean.gff3";
 string tae = "files/data/TAE.fa.filtered.21.nodups"
 
+#intermediate results
 string tae_allhits = "files/output/tae_dna.allhits.csv"
 string ann_genes = "files/output/genes.gff3";
 string gene_sequences = "files/output/genes_sequences.fasta"
 string gene_sequences_db = gene_sequences + ".db";
 string sumirfold_res = "files/output/sumirfold.csv";
+
+#helpers
 string cmd = "";
 
 #clean gff3 file for pandas
@@ -20,7 +23,7 @@ cmd += " |  sed '/^#/ d' > " + reference_annotations_clean
 #only genes in gff
 cmd =  "awk -F '\t' '{ if($3==\"gene\") print}' ";
 cmd += " " + reference_annotations_clean  + " > " + ann_genes
-stage("filter gff to only genes ",cmd);
+#stage("filter gff to only genes ",cmd);
 
 #remove some ids from reference sequence
 cmd = "python scripts/FAexclude.py -s " + reference_sequences;
@@ -32,11 +35,11 @@ cmd =  "python scripts/ann2fasta.py -s " + reference_sequences_chromosomal;
 cmd += " -a " + ann_genes;
 cmd += " -w 150 ";
 cmd += " -o " + gene_sequences;
-stage("all sequences to genes sequences",cmd);
+#stage("all sequences to genes sequences",cmd);
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
-cmd += " -out " + gene_sequences + ".db"
+cmd += " -out " + gene_sequences_db
 stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
