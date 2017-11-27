@@ -16,6 +16,10 @@ reference_sequences = "data/seqdemo.fa";
 cmd = "cat " + reference_annotations + " |  sed '/^#/ d' > " + reference_annotations_clean
 stage("clean reference annotations ",cmd);
 
+#remove some ids from reference sequence
+cmd = "cat " + reference_annotations + " |  sed '/^#/ d' > " + reference_annotations_clean
+stage("clean reference annotations ",cmd);
+
 #only genes in gff
 cmd = "cat " + reference_annotations_clean + " |  grep gene > " + ann_genes
 stage("filter gff to genes ",cmd);
