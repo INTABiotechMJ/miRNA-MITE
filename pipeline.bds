@@ -18,8 +18,8 @@ cmd += " |  sed '/^#/ d' > " + reference_annotations_clean
 #stage("clean '#' from reference annotations ",cmd);
 
 #only genes in gff
-cmd =  "cat " + reference_annotations_clean;
-cmd += " |  grep gene > " + ann_genes
+cmd =  "awk -F '\t' '{ if($3==\"gene\") print}' ";
+cmd += " " + reference_annotations_clean  + " > " + ann_genes
 #stage("filter gff to only genes ",cmd);
 
 #remove some ids from reference sequence
