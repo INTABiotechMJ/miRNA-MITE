@@ -9,7 +9,7 @@ def exclude(sequence, records, output_fasta):
     fasta_seq = SeqIO.parse(sequence,'fasta')
     buffer = []
     for record in fasta_seq:
-        if record.id in exclude:
+        if record.id in records:
             continue
         buffer.append(record)
     SeqIO.write(buffer, output_fasta, "fasta")
