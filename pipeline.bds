@@ -35,7 +35,7 @@ stage("all sequences to genes sequences",cmd);
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
-cmd =+ " -out " + gene_sequences + ".db"
+cmd += " -out " + gene_sequences + ".db"
 stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
