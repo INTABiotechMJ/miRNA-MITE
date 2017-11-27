@@ -11,7 +11,7 @@ def fasta_from_ann(annotation, sequence, feature, windows, output_fasta):
     fasta_seq = SeqIO.parse(sequence,'fasta')
     buffer = []
     for record in fasta_seq:
-        df_exctract = df_gff[(df_gff.seqname == record.id) & (df_gff.feature == feature)]
+        df_exctract = df_gff[(df_gff.seqname == record.id)]
         for k,v in df_exctract.iterrows():
             clean_seq = ''.join(str(record.seq).splitlines())
             if int(v.start) - windows < 0:
