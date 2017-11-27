@@ -27,7 +27,7 @@ cmd = "cat " + reference_annotations_clean + " |  grep gene > " + ann_genes
 stage("filter gff to genes ",cmd);
 
 #extract genes sequences from reference and annotations +- 100
-cmd =  "python scripts/ann2fasta.py -s " + reference_sequences;
+cmd =  "python scripts/ann2fasta.py -s " + reference_sequences_chromosomal;
 cmd += " -a " + ann_genes;
 cmd += " -f gene ";
 cmd += " -w 150 ";
