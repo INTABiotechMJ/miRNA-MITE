@@ -8,45 +8,52 @@ string tae = "files/data/TAE.fa.filtered.21.nodups"
 string tae_allhits = "files/output/tae_dna.allhits.csv"
 string ann_genes = "files/output/genes.gff3";
 string gene_sequences = "files/output/genes_sequences.fasta"
+string gene_sequences_db = gene_sequences + ".db";
+string sumirfold_res = "files/output/sumirfold.csv";
 string cmd = "";
 
 #clean gff3 file for pandas
 cmd =  "cat " + reference_annotations; 
 cmd += " |  sed '/^#/ d' > " + reference_annotations_clean
-stage("clean reference annotations ",cmd);
+#stage("clean '#' from reference annotations ",cmd);
 
 #only genes in gff
 cmd =  "cat " + reference_annotations_clean;
 cmd += " |  grep gene > " + ann_genes
-stage("filter gff to genes ",cmd);
+#stage("filter gff to only genes ",cmd);
 
 #remove some ids from reference sequence
-cmd = "python scripts/fasomerecords.py -s " + reference_sequences;
+cmd = "python scripts/FAexclude.py -s " + reference_sequences;
 cmd += " -e Pt -e Mt -o " + reference_sequences_chromosomal + "";
-stage("clean reference annotations ",cmd);
+#stage("clean reference annotations from mitocondrial DNA",cmd);
 
 #extract genes sequences from reference and annotations +- 100
 cmd =  "python scripts/ann2fasta.py -s " + reference_sequences_chromosomal;
 cmd += " -a " + ann_genes;
-cmd += " -f gene ";
 cmd += " -w 150 ";
 cmd += " -o " + gene_sequences;
-stage("all sequences to genes sequences",cmd);
+#stage("all sequences to genes sequences",cmd);
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
 cmd += " -out " + gene_sequences + ".db"
-stage("makeblastdb for gene sequences", cmd);
+#stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
 cmd =  "blastn -word_size 21 ";
 cmd += " -task blastn-short -query " + tae;
-cmd += " -db " + gene_sequences + ".db"; 
+cmd += " -db " + gene_sequences_db; 
 cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 "; 
 cmd += " -out " + tae_allhits;
-stage("TAE vs GENE_sequences",cmd)
+#stage("TAE vs GENE_sequences",cmd)
 
 #validate miRNA secondary structure
+cmd = "perl scripts/sumirfold.pl ";
+cmd += tae;
+cmd += " " + tae_allhits + " ";
+cmd += " " + gene_sequences + " ";
+cmd += " " + sumirfold_res + " ";
+stage("sumirfold", cmd);
 
 #extract valid miRNA sequences
 
