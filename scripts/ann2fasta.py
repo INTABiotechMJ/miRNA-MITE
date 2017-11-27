@@ -27,7 +27,6 @@ def fasta_from_ann(annotation, sequence, feature, windows, output_fasta):
             desc = "attribute: " + v.attribute + " strand: " + v.strand
             seq = SeqRecord(Seq(new_seq), id=new_id,description = desc)
             buffer.append(seq)
-            print(record.id)
     SeqIO.write(buffer, output_fasta, "fasta")
 
 if __name__ == "__main__":
