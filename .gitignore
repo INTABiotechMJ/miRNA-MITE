@@ -1,8 +1,4 @@
 .DS_Store
-bds/
-data/
 .vscode/
-output/
-lib/
+files/
 *.chp
-dev/
