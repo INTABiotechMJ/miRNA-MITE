@@ -40,7 +40,7 @@ cmd += " -o " + gene_sequences;
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
 cmd += " -out " + gene_sequences_db
-stage("makeblastdb for gene sequences", cmd);
+#stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
 cmd =  "blastn -word_size 21 ";
