@@ -13,6 +13,7 @@ def fasta_from_ann(annotation, sequence, windows, output_fasta):
     fasta_seq = SeqIO.parse(sequence, 'fasta')
     buffer_seqs = []
     cont = 0
+    gene_name = ""
     for record in fasta_seq:
         df_exctract = df_gff[(df_gff.seqname == record.id)]
         for key,val in df_exctract.iterrows():
