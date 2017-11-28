@@ -7,7 +7,7 @@ from Bio import SeqIO
 import argparse
 import pandas as pd
 buffer_size = 10
-#this script creates miRNA clustes
+#this script creates miRNA clusters
 #separated for maximum this variable
 #then creates a fasta containing only the section of this clusters
 

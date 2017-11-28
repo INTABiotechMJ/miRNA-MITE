@@ -7,8 +7,12 @@ string tae = "files/data/TAE.fa.filtered.21.nodups"
 
 #intermediate results
 string tae_allhits = "files/output/tae_dna.allhits.csv"
+string tae_cluster_allhits = "files/output/tae_cluster_dna.allhits.csv"
 string ann_genes = "files/output/genes.gff3";
 string gene_sequences = "files/output/genes_sequences.fasta"
+string cluster = "files/output/cluster.csv"
+string cluster_seqs = "files/output/cluster_sequences.fasta"
+string cluster_seqs_db = cluster_seqs + ".db"
 string gene_sequences_db = gene_sequences + ".db";
 string sumirfold_res = "files/output/sumirfold.csv";
 
@@ -51,11 +55,40 @@ cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 ";
 cmd += " -out " + tae_allhits;
 stage("TAE vs GENE_sequences",cmd)
 
+#cluster fasta into miRNA sections
+cmd = "python scripts/cluster_miRNA_splitting.py ";
+cmd = "-a " + tae_allhits;
+cmd = " -csz 251";
+cmd = " -o " + cluster;
+stage("Cluster miRNA sections", cmd);
+
+#extract fasta from cluster
+cmd = "python scripts/extract_fasta_cluster.py ";
+cmd = "-c " + cluster;
+cmd = " -wz 251";
+cmd = " -o " + cluster_seqs;
+stage("Extract fasta from cluster", cmd);
+
+#makeblastdb new fasta
+cmd = "makeblastdb -dbtype 'nucl' -in " + cluster_seqs;
+cmd += " -out " + cluster_seqs_db
+cmd += " -parse_seqids"
+stage("makeblastdb for cluster sequences", cmd);
+
+#blastn again
+cmd =  "blastn -word_size 21 ";
+cmd += " -task blastn-short -query " + tae;
+cmd += " -db " + cluster_seqs_db; 
+cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 "; 
+cmd += " -out " + tae_cluster_allhits;
+stage("TAE vs cluster sequences",cmd)
+
+
 #validate miRNA secondary structure
 cmd = "perl scripts/sumirfold.pl ";
 cmd += tae;
-cmd += " " + tae_allhits + " ";
-cmd += " " + gene_sequences_db + " ";
+cmd += " " + tae_cluster_allhits + " ";
+cmd += " " + cluster_seqs_db + " ";
 cmd += " > " + sumirfold_res + " ";
 stage("sumirfold", cmd);
 
