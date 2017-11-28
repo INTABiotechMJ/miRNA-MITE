@@ -9,6 +9,7 @@ string tae = "files/data/TAE.fa.filtered.21.nodups"
 string tae_allhits = "files/output/tae_dna.allhits.csv"
 string ann_genes = "files/output/genes.gff3";
 string gene_sequences = "files/output/genes_sequences.fasta"
+string gene_sequences_db = gene_sequences + ".db";
 string sumirfold_res = "files/output/sumirfold.csv";
 
 #helpers
@@ -38,13 +39,13 @@ cmd += " -o " + gene_sequences;
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
-cmd += " -out " + gene_sequences
-stage("makeblastdb for gene sequences", cmd);
+cmd += " -out " + gene_sequences_db
+#stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
 cmd =  "blastn -word_size 21 ";
 cmd += " -task blastn-short -query " + tae;
-cmd += " -db " + gene_sequences; 
+cmd += " -db " + gene_sequences_db; 
 cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 "; 
 cmd += " -out " + tae_allhits;
 stage("TAE vs GENE_sequences",cmd)
@@ -54,7 +55,8 @@ cmd = "perl scripts/sumirfold.pl ";
 cmd += tae;
 cmd += " " + tae_allhits + " ";
 cmd += " " + gene_sequences + " ";
-cmd += " " + sumirfold_res + " ";
+cmd += " " + gene_sequences_db + " ";
+cmd += " > " + sumirfold_res + " ";
 stage("sumirfold", cmd);
 
 #extract valid miRNA sequences
