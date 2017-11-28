@@ -48,7 +48,7 @@ cmd += " -task blastn-short -query " + tae;
 cmd += " -db " + gene_sequences_db; 
 cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 "; 
 cmd += " -out " + tae_allhits;
-stage("TAE vs GENE_sequences",cmd)
+#stage("TAE vs GENE_sequences",cmd)
 
 #validate miRNA secondary structure
 cmd = "perl scripts/sumirfold.pl ";
