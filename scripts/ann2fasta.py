@@ -37,7 +37,7 @@ def fasta_from_ann(annotation, sequence, windows, output_fasta):
             seq = SeqRecord(Seq(new_seq), id=gene_name, description=desc)
             buffer_seqs.append(seq)
         cont += 1
-    print(cont)
+    print(cont, gene_name, record.id)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
 if __name__ == "__main__":
