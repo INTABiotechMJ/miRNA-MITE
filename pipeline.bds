@@ -35,11 +35,12 @@ cmd =  "python scripts/ann2fasta.py -s " + reference_sequences_chromosomal;
 cmd += " -a " + ann_genes;
 cmd += " -w 150 ";
 cmd += " -o " + gene_sequences;
-#stage("all sequences to genes sequences",cmd);
+stage("all sequences to genes sequences",cmd);
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
 cmd += " -out " + gene_sequences_db
+cmd += " -parse_seqids"
 stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
@@ -54,7 +55,6 @@ stage("TAE vs GENE_sequences",cmd)
 cmd = "perl scripts/sumirfold.pl ";
 cmd += tae;
 cmd += " " + tae_allhits + " ";
-cmd += " " + gene_sequences + " ";
 cmd += " " + gene_sequences_db + " ";
 cmd += " > " + sumirfold_res + " ";
 stage("sumirfold", cmd);

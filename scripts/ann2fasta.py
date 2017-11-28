@@ -12,6 +12,7 @@ def fasta_from_ann(annotation, sequence, windows, output_fasta):
     df_gff.columns = ['seqname', 'source', 'feature', 'start', 'end', 'score', 'strand', 'frame', 'attribute']
     fasta_seq = SeqIO.parse(sequence, 'fasta')
     buffer_seqs = []
+    cont = 0
     for record in fasta_seq:
         df_exctract = df_gff[(df_gff.seqname == record.id)]
         for key,val in df_exctract.iterrows():
@@ -25,10 +26,18 @@ def fasta_from_ann(annotation, sequence, windows, output_fasta):
             else:
                 end = int(val.end) + windows
             new_seq = clean_seq[start:end]
-            new_id = record.id + "_from_" + str(val.start) + "_to_" + str(val.end) + "_feature_" + val.feature
-            desc = "attribute: " + val.attribute + " strand: " + val.strand
-            seq = SeqRecord(Seq(new_seq), id=new_id, description=desc)
+            att = val.attribute
+            gene_name = att[att.find('gene')+5 : att.find(';',att.find('gene'))]
+            desc = "id: " + str(record.id)
+            desc += " start: " + str(val.start)
+            desc += " end: " + str(val.end)
+            desc += " strand: " + val.strand
+            desc += " feature: " + str(val.feature)
+            desc += " attributes: " + val.attribute
+            seq = SeqRecord(Seq(new_seq), id=gene_name, description=desc)
             buffer_seqs.append(seq)
+        cont += 1
+    print(cont)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
 if __name__ == "__main__":
