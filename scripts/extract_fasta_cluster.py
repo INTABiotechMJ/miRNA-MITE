@@ -13,13 +13,14 @@ buffer_size = 10
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--cluster", help="Input file (csv)",  required=True)
+parser.add_argument("-o", "--output", help="Output file (.fasta)",  required=True)
 parser.add_argument("-f", "--fasta", help="Input file (.fasta format)",  required=True)
 parser.add_argument("-wz", "--windows_size", help="Number of bp to split to left and right",  required=True, type=int)
 args = parser.parse_args()
 #in clusters leave windows_size for each side
 windows_size = args.windows_size
 allhits = []
-output_file = open(args.cluster + ".fasta", 'wb')
+output_file = open(args.output + ".fasta", 'wb')
 allhit = pd.read_csv(args.cluster , sep=",")
 
 count = 0
