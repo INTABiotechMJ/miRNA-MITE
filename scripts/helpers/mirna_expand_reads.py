@@ -9,7 +9,6 @@ def mirna_expand(libraries, output_fasta):
     """
     buffer_seqs = []
     count = 0
-    print (libraries)
     for library in libraries:
         lib_file = open(library)
         for line in lib_file:
@@ -17,7 +16,7 @@ def mirna_expand(libraries, output_fasta):
             number = line.split('\t')[1]
             for i in range(int(number)):
                 count += 1
-                record = SeqRecord(Seq(sequence), id=count, description=" ")
+                record = SeqRecord(Seq(sequence), id=str(count), description=" ")
                 buffer_seqs.append(record)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
