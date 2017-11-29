@@ -39,13 +39,13 @@ cmd =  "python scripts/ann2fasta.py -s " + reference_sequences_chromosomal;
 cmd += " -a " + ann_genes;
 cmd += " -w 150 ";
 cmd += " -o " + gene_sequences;
-stage("all sequences to genes sequences",cmd);
+#stage("all sequences to genes sequences",cmd);
 
 #makeblastdb dna
 cmd = "makeblastdb -dbtype 'nucl' -in " + gene_sequences;
 cmd += " -out " + gene_sequences_db
 cmd += " -parse_seqids"
-stage("makeblastdb for gene sequences", cmd);
+#stage("makeblastdb for gene sequences", cmd);
 
 #map miRNA sequences into genes sequences
 cmd =  "blastn -word_size 21 ";
@@ -53,21 +53,21 @@ cmd += " -task blastn-short -query " + tae;
 cmd += " -db " + gene_sequences_db; 
 cmd += " -ungapped -penalty -1 -reward 1 -outfmt 6 "; 
 cmd += " -out " + tae_allhits;
-stage("TAE vs GENE_sequences",cmd)
+#stage("TAE vs GENE_sequences",cmd)
 
 #cluster fasta into miRNA sections
 cmd = "python scripts/cluster_miRNA_splitting.py ";
 cmd = "-a " + tae_allhits;
 cmd = " -csz 251";
 cmd = " -o " + cluster;
-stage("Cluster miRNA sections", cmd);
+#stage("Cluster miRNA sections", cmd);
 
 #extract fasta from cluster
 cmd = "python scripts/extract_fasta_cluster.py ";
 cmd = "-c " + cluster;
 cmd = " -wz 251";
 cmd = " -o " + cluster_seqs;
-stage("Extract fasta from cluster", cmd);
+#stage("Extract fasta from cluster", cmd);
 
 #makeblastdb new fasta
 cmd = "makeblastdb -dbtype 'nucl' -in " + cluster_seqs;

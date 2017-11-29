@@ -12,10 +12,10 @@ buffer_size = 10
 #then creates a fasta containing only the section of this clusters
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--cluster", help="Input file (csv)",  required=True)
-parser.add_argument("-o", "--output", help="Output file (.fasta)",  required=True)
-parser.add_argument("-f", "--fasta", help="Input file (.fasta format)",  required=True)
-parser.add_argument("-wz", "--windows_size", help="Number of bp to split to left and right",  required=True, type=int)
+parser.add_argument("-c", "--cluster", help="Input file (.csv)", required=True)
+parser.add_argument("-o", "--output", help="Output file (.fasta)", required=True)
+parser.add_argument("-f", "--fasta", help="Input file (.fasta format)", required=True)
+parser.add_argument("-wz", "--windows_size", help="Number of bp to split to left and right", required=True, type=int)
 args = parser.parse_args()
 #in clusters leave windows_size for each side
 windows_size = args.windows_size
