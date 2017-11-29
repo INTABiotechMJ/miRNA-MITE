@@ -14,12 +14,12 @@ def mirna_expand(libraries, output_fasta):
         for line in lib_file:
             if len(line.split('\t')) < 2:
                 continue
-            sequence = line.split('\t')[0]
+            sequence = line.split('\t')[0].strip()
             number = line.split('\t')[1]
             if sequence:
                 for i in range(int(number)):
                     count += 1
-                    record = SeqRecord(Seq(sequence.strip()), id=str(count), description=" ")
+                    record = SeqRecord(Seq(sequence), id=str(count), description=" ")
                     buffer_seqs.append(record)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
