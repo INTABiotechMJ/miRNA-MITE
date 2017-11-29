@@ -19,10 +19,8 @@ def mirna_expand(libraries, output_fasta):
             if sequence:
                 for i in range(int(number)):
                     count += 1
-                    print(sequence)
                     record = SeqRecord(Seq(sequence), id=str(count), description="s")
                     buffer_seqs.append(record)
-    print(buffer_seqs)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
 if __name__ == "__main__":
