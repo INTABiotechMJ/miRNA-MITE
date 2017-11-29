@@ -12,6 +12,9 @@ def mirna_expand(libraries, output_fasta):
     for library in libraries:
         lib_file = open(library)
         for line in lib_file:
+            if len(line.split('\t')) < 2:
+                print(line)
+                continue
             sequence = line.split('\t')[0]
             number = line.split('\t')[1]
             for i in range(int(number)):
