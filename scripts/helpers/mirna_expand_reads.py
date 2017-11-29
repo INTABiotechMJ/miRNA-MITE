@@ -17,10 +17,11 @@ def mirna_expand(libraries, output_fasta):
                 continue
             sequence = line.split('\t')[0]
             number = line.split('\t')[1]
-            for i in range(int(number)):
-                count += 1
-                record = SeqRecord(Seq(sequence), id=str(count), description=" ")
-                buffer_seqs.append(record)
+            if sequence:
+                for i in range(int(number)):
+                    count += 1
+                    record = SeqRecord(Seq(sequence.strip()), id=str(count), description=" ")
+                    buffer_seqs.append(record)
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
 if __name__ == "__main__":
