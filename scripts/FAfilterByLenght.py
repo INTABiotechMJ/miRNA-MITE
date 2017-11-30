@@ -16,7 +16,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()#pylint: disable=invalid-name
     parser.add_argument("-s", "--sequence", help="Sequence file (.fasta)", required=True)
-    parser.add_argument("-l", "--lenghts", help="Exclude some ids", action='append')
+    parser.add_argument("-l", "--lenghts", help="Exclude some ids", action='append', type='int')
     parser.add_argument("-o", "--output", help="Output file name (.fasta format)", required=True)
     args = parser.parse_args()#pylint: disable=invalid-name
     filter(args.sequence, args.lenghts, args.output)
