@@ -25,3 +25,7 @@ OR
     ./configure
     make
     sudo make install
+
+
+
+nohup ./files/libs/ShortStack/ShortStack --readfile files/data/T --outdir files/output/sstack_genesseqs_mirna21 --genomefile files/output/genes_sequences.fasta --bowtie_cores 3  & 

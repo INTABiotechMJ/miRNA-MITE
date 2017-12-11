@@ -29,16 +29,16 @@ def fasta_from_ann(annotation, sequence, windows, output_fasta):
             new_seq = clean_seq[start:end]
             att = val.attribute
             gene_name = att[att.find('gene')+5 : att.find(';',att.find('gene'))]
-            desc = "id: " + str(record.id)
-            desc += " start: " + str(val.start)
-            desc += " end: " + str(val.end)
-            desc += " strand: " + val.strand
-            desc += " feature: " + str(val.feature)
-            desc += " attributes: " + val.attribute
+            desc = "id:" + str(record.id)
+            desc += " start:" + str(val.start)
+            desc += " end:" + str(val.end)
+            desc += " strand:" + val.strand
+            desc += " feature:" + str(val.feature)
+            desc += " attributes:" + val.attribute
             seq = SeqRecord(Seq(new_seq), id=gene_name, description=desc)
             buffer_seqs.append(seq)
             cont += 1
-        print(cont, gene_name, record.id)
+        break
     SeqIO.write(buffer_seqs, output_fasta, "fasta")
 
 if __name__ == "__main__":
